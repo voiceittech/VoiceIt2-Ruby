@@ -22,9 +22,12 @@ A Ruby wrapper for VoiceIt's new API2.0 featuring Voice + Face Verification and 
       * [Remove User from Group](#remove-user-from-group)      
   * [Enrollment API Calls](#enrollment-api-calls)
       * [Get All Enrollments for User](#get-all-enrollments-for-user)
+      * [Get All Face Enrollments for User](#get-all-face-enrollments-for-user)
       * [Delete Enrollment for User](#delete-enrollment-for-user)
       * [Create Audio Enrollment](#create-voice-enrollment)
+      * [Create Audio Enrollment By Url](#create-voice-enrollment-by-url)
       * [Create Video Enrollment](#create-video-enrollment)
+      * [Create Video Enrollment](#create-video-enrollment-by-url)
   * [Verification API Calls](#verification-api-calls)
       * [Audio Verification](#voice-verification)
       * [Video Verification](#video-verification)
@@ -159,6 +162,14 @@ Gets all enrollment for user with given userId(begins with 'usr_')
 myVoiceIt.getAllEnrollmentsForuser("USER_ID_HERE")
 ```
 
+#### Get All Face Enrollments For User 
+
+Gets all the face enrollments for the user
+
+```rb
+myVoiceIt.getAllFaceEnrollmentsForuser("USER_ID_HERE")
+```
+
 #### Delete Enrollment for User
 
 Delete enrollment for user with given userId(begins with 'usr_') and enrollmentId(integer)
@@ -175,12 +186,28 @@ Create audio enrollment for user with given userId(begins with 'usr_') and conte
 myVoiceIt.createVoiceEnrollment("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", recording);
 ```
 
+#### Create Voice Enrollment By Url
+
+Create audio enrollment for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
+
+```rb
+myVoiceIt.createVoiceEnrollmentByUrl("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "URL");
+```
+
 #### Create Video Enrollment
 
 Create video enrollment for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
 
 ```rb
 myVoiceIt.createVideoEnrollment("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", video);
+```
+
+#### Create Video Enrollment By Url
+
+Create video enrollment for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
+
+```rb
+myVoiceIt.createVideoEnrollmentByUrl("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "URL");
 ```
 
 ### Verification API Calls
