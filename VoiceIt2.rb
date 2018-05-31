@@ -89,7 +89,7 @@ class VoiceIt2
         e.response
   end
 
-  def createVoiceEnrollment(userId, contentLanguage, recording)
+  def createVoiceEnrollment(userId, contentLanguage, filePath)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/enrollments',
@@ -99,7 +99,7 @@ class VoiceIt2
         :multipart => true,
         :userId => userId,
         :contentLanguage => contentLanguage,
-        :recording => recording
+        :recording => File.new(filePath, 'rb')
         }).execute
     rescue => e
         e.response
@@ -121,7 +121,7 @@ class VoiceIt2
         e.response
   end
 
-  def createFaceEnrollment(userId, video, doBlinkDetection = false)
+  def createFaceEnrollment(userId, filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/enrollments/face',
@@ -130,14 +130,14 @@ class VoiceIt2
       :payload => {
         :multipart => true,
         :userId => userId,
-        :video => video,
+        :video => File.new(filePath, 'rb'),
         :doBlinkDetection => doBlinkDetection
         }).execute
     rescue => e
         e.response
   end
 
-  def createVideoEnrollment(userId, contentLanguage, video, doBlinkDetection = false)
+  def createVideoEnrollment(userId, contentLanguage, filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/enrollments/video',
@@ -147,7 +147,7 @@ class VoiceIt2
         :multipart => true,
         :userId => userId,
         :contentLanguage => contentLanguage,
-        :video => video,
+        :video => File.new(filePath, 'rb'),
         :doBlinkDetection => doBlinkDetection
         }).execute
     rescue => e
@@ -275,7 +275,7 @@ class VoiceIt2
         e.response
   end
 
-  def voiceVerification(userId, contentLanguage, recording)
+  def voiceVerification(userId, contentLanguage, filePath)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/verification',
@@ -285,7 +285,7 @@ class VoiceIt2
         :multipart => true,
         :userId => userId,
         :contentLanguage => contentLanguage,
-        :recording => recording
+        :recording => File.new(filePath, 'rb')
         }).execute
     rescue => e
         e.response
@@ -307,7 +307,7 @@ class VoiceIt2
         e.response
   end
 
-  def faceVerification(userId, video, doBlinkDetection = false)
+  def faceVerification(userId, filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/verification/face',
@@ -317,13 +317,13 @@ class VoiceIt2
         :multipart => true,
         :userId => userId,
         :doBlinkDetection => doBlinkDetection,
-        :video => video
+        :video => File.new(filePath, 'rb')
         }).execute
     rescue => e
         e.response
   end
 
-  def videoVerification(userId, contentLanguage, video, doBlinkDetection = false)
+  def videoVerification(userId, contentLanguage, filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/verification/video',
@@ -334,7 +334,7 @@ class VoiceIt2
         :userId => userId,
         :contentLanguage => contentLanguage,
         :doBlinkDetection => doBlinkDetection,
-        :video => video
+        :video => File.new(filePath, 'rb')
         }).execute
     rescue => e
         e.response
@@ -357,7 +357,7 @@ class VoiceIt2
         e.response
   end
 
-  def voiceIdentification(groupId, contentLanguage, recording)
+  def voiceIdentification(groupId, contentLanguage, filePath)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/identification',
@@ -367,7 +367,7 @@ class VoiceIt2
         :multipart => true,
         :groupId => groupId,
         :contentLanguage => contentLanguage,
-        :recording => recording
+        :recording => File.new(filePath, 'rb')
         }).execute
     rescue => e
         e.response
@@ -389,7 +389,7 @@ class VoiceIt2
         e.response
   end
 
-  def videoIdentification(groupId, contentLanguage, video, doBlinkDetection = false)
+  def videoIdentification(groupId, contentLanguage, filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + '/identification/video',
@@ -400,7 +400,7 @@ class VoiceIt2
         :groupId => groupId,
         :contentLanguage => contentLanguage,
         :doBlinkDetection => doBlinkDetection,
-        :video => video
+        :video => File.new(filePath, 'rb')
         }).execute
     rescue => e
         e.response
