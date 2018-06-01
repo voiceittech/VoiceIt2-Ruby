@@ -46,6 +46,10 @@ You can install with:
 ```
 gem install rest-client
 ```
+Install the VoiceIt2 package with:
+```
+gem install VoiceIt2
+```
 
 ## API Calls
 
@@ -53,7 +57,7 @@ gem install rest-client
 
 First require the wrapper.
 ```rb
-require_relative 'VoiceIt2.rb'
+require 'VoiceIt2.rb'
 ```
 Then initialize a reference with the API Credentials.
 ```rb
