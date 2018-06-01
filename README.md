@@ -183,7 +183,7 @@ myVoiceIt.deleteEnrollmentForUser( "USER_ID_HERE", "ENROLLMENT_ID_HERE")
 Create audio enrollment for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
 
 ```rb
-myVoiceIt.createVoiceEnrollment("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", recording);
+myVoiceIt.createVoiceEnrollment("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "FILE_PATH");
 ```
 
 #### Create Voice Enrollment By Url
@@ -199,7 +199,7 @@ myVoiceIt.createVoiceEnrollmentByUrl("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "U
 Create video enrollment for user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
 
 ```rb
-myVoiceIt.createVideoEnrollment("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", video);
+myVoiceIt.createVideoEnrollment("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "FILE_PATH");
 ```
 
 #### Create Video Enrollment By Url
@@ -217,14 +217,14 @@ myVoiceIt.createVideoEnrollmentByUrl("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "U
 Verify user with the given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
 
 ```rb
-myVoiceIt.voiceVerification("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", recording)
+myVoiceIt.voiceVerification("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "FILE_PATH")
 ```
 
 #### Video Verification
 
 Verify user with given userId(begins with 'usr_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
 ```rb
-myVoiceIt.videoVerification("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", video)
+myVoiceIt.videoVerification("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", "FILE_PATH")
 ```
 
 ### Identification API Calls
@@ -234,7 +234,7 @@ myVoiceIt.videoVerification("USER_ID_HERE", "CONTENT_LANGUAGE_HERE", video)
 Identify user inside group with the given groupId(begins with 'grp_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
 
 ```rb
-myVoiceIt.voiceIdentification("GROUP_ID_HERE", "CONTENT_LANGUAGE_HERE", recording)
+myVoiceIt.voiceIdentification("GROUP_ID_HERE", "CONTENT_LANGUAGE_HERE", "FILE_PATH")
 ```
 
 #### Video Identification
@@ -242,7 +242,7 @@ myVoiceIt.voiceIdentification("GROUP_ID_HERE", "CONTENT_LANGUAGE_HERE", recordin
 Identify user inside group with the given groupId(begins with 'grp_') and contentLanguage('en-US','es-ES' etc.). Note: File recording need to be no less than 1.2 seconds and no more than 5 seconds
 
 ```rb
-myVoiceIt.videoIdentification("GROUP_ID_HERE", "CONTENT_LANGUAGE_HERE", video)
+myVoiceIt.videoIdentification("GROUP_ID_HERE", "CONTENT_LANGUAGE_HERE", "FILE_PATH")
 ```
 
 ## Author
