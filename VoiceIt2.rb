@@ -29,7 +29,7 @@ class VoiceIt2
         e.response
   end
 
-  def getUser(userId)
+  def checkUserExists(userId)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + '/users/' + userId,
