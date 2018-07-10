@@ -174,7 +174,7 @@ class VoiceIt2
   def deleteFaceEnrollment(userId, faceEnrollmentId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + '/enrollments/face/' + userId + '/' + faceEnrollmentId,
+      :url => @BASE_URL.to_s + '/enrollments/face/' + userId + '/' + faceEnrollmentId.to_s,
       :user => @api_key,
       :password => @api_token).execute
     rescue => e
@@ -184,7 +184,7 @@ class VoiceIt2
   def deleteEnrollmentForUser(userId, enrollmentId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + '/enrollments/' + userId + '/' + enrollmentId,
+      :url => @BASE_URL.to_s + '/enrollments/' + userId + '/' + enrollmentId.to_s,
       :user => @api_key,
       :password => @api_token).execute
     rescue => e
