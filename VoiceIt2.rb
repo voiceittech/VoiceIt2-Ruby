@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require 'rest_client'
+require 'rest-client'
 
 class VoiceIt2
 
@@ -14,7 +14,10 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/users',
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -24,7 +27,10 @@ class VoiceIt2
       :method => :post,
       :url => @BASE_URL.to_s + '/users',
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -34,7 +40,10 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/users/' + userId,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -44,7 +53,11 @@ class VoiceIt2
       :method => :delete,
       :url => @BASE_URL.to_s + '/users/' + userId,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
     rescue => e
         e.response
   end
@@ -54,7 +67,11 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/users/' + userId + '/groups',
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
     rescue => e
         e.response
   end
@@ -64,7 +81,11 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/enrollments/' + userId,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
     rescue => e
         e.response
   end
@@ -74,7 +95,11 @@ class VoiceIt2
       :method => :delete,
       :url => @BASE_URL.to_s + '/enrollments/' + userId + '/all',
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
     rescue => e
         e.response
   end
@@ -84,7 +109,11 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/enrollments/face/' + userId,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
     rescue => e
         e.response
   end
@@ -95,6 +124,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/enrollments',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -111,6 +143,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/enrollments/byUrl',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -127,6 +162,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/enrollments/face',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -143,6 +181,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/enrollments/video',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -160,6 +201,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/enrollments/video/byUrl',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -176,7 +220,10 @@ class VoiceIt2
       :method => :delete,
       :url => @BASE_URL.to_s + '/enrollments/face/' + userId + '/' + faceEnrollmentId.to_s,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -186,7 +233,11 @@ class VoiceIt2
       :method => :delete,
       :url => @BASE_URL.to_s + '/enrollments/' + userId + '/' + enrollmentId.to_s,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
     rescue => e
         e.response
   end
@@ -196,7 +247,10 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/groups',
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -206,7 +260,10 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/groups/' + groupId,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -216,7 +273,10 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + '/groups/' + groupId + '/exists',
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -227,6 +287,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/groups',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :description => description
@@ -241,6 +304,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/groups/addUser',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :groupId => groupId,
@@ -256,6 +322,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/groups/removeUser',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :groupId => groupId,
@@ -270,7 +339,10 @@ class VoiceIt2
       :method => :delete,
       :url => @BASE_URL.to_s + '/groups/' + groupId,
       :user => @api_key,
-      :password => @api_token).execute
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
     rescue => e
         e.response
   end
@@ -281,6 +353,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/verification',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -297,6 +372,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/verification/byUrl',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -313,6 +391,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/verification/face',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -329,6 +410,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/verification/video',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -346,6 +430,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/verification/video/byUrl',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :userId => userId,
@@ -363,6 +450,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/identification',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :groupId => groupId,
@@ -379,6 +469,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/identification/byUrl',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :groupId => groupId,
@@ -395,6 +488,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/identification/video',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :groupId => groupId,
@@ -412,6 +508,9 @@ class VoiceIt2
       :url => @BASE_URL.to_s + '/identification/video/byUrl',
       :user => @api_key,
       :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
       :payload => {
         :multipart => true,
         :groupId => groupId,
