@@ -1,18 +1,5 @@
 require 'rest-client'
 
-# Get Gem API Key, write it into ~/.gem/credentials
-rubyGemUserName = ENV['RUBYGEMSUSERNAME']
-rubyGemPass = ENV['RUBYGEMSPASSWORD']
-
-token = RestClient::Request.new(
-  :method => :get,
-  :url => 'https://rubygems.org/api/v1/api_key.yaml',
-  :user => rubyGemUserName,
-  :password => rubyGemPass,
-).execute
-
-File.open(Dir.home + '/.gem/credentials', 'w') { |file| file.write(token) }
-
 # Generate required files
 
 # Generate new version string
@@ -44,6 +31,5 @@ end"
 
 File.open('./VoiceIt2.gemspec', 'w') { |file| file.write(gemspec) }
 
-# system 'sudo ~/.gem/credentials'
 system 'gem build VoiceIt2.gemspec'
 system 'gem push VoiceIt2' + newVersion + '.gem'
