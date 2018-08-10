@@ -44,6 +44,6 @@ end"
 
 File.open('./VoiceIt2.gemspec', 'w') { |file| file.write(gemspec) }
 
-system '~/.gem/credentials'
+system 'sudo ~/.gem/credentials'
 system 'gem build VoiceIt2.gemspec'
 system 'gem push VoiceIt2' + newVersion + '.gem'
