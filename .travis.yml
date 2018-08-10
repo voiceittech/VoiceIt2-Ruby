@@ -6,7 +6,7 @@ before_script:
 - gem install rest-client
 script: ruby Tests.rb
 after_success:
-- ruby UpdateGems.rb
+- ruby UpdateGem.rb
 notifications:
   slack:
     rooms:

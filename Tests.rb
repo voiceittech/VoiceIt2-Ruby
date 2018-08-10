@@ -63,6 +63,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal('SUCC', ret['responseCode'])
   end
 
+=begin
   def test_video() # video enrollment, video verification, video identification, delete video enrollment (and by URL respectively)
     # Download files to use
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan1.mov', './videoEnrollmentArmaan1.mov')
@@ -234,7 +235,6 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     # Identify Voice
     ret = JSON.parse(myVoiceIt.voiceIdentification(groupId, 'en-US', './verificationArmaan1.wav'))
-    puts ret
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
@@ -251,8 +251,6 @@ class TestVoiceIt2 < Test::Unit::TestCase
     groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']
     myVoiceIt.addUserToGroup(groupId, userId1)
     myVoiceIt.addUserToGroup(groupId, userId2)
-    puts userId1
-    puts userId2
 
     # Voice Enrollments by URL
     ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan1.wav'))
@@ -281,7 +279,6 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     # Identify Voice by URL
     ret = JSON.parse(myVoiceIt.voiceIdentificationByUrl(groupId, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/verificationArmaan1.wav'))
-    puts ret
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
@@ -350,5 +347,6 @@ class TestVoiceIt2 < Test::Unit::TestCase
     File.delete('./faceEnrollmentArmaan3.mp4')
     File.delete('./faceVerificationArmaan1.mp4')
   end
+=end
 
 end

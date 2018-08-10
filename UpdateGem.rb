@@ -1,19 +1,16 @@
-=begin
 require 'rest-client'
 
-# Get Gem API Key
+# Get Gem API Key, write it into ~/.gem/credentials
 
 rubyGemUserName = ENV['RUBYGEMSUSERNAME']
 rubyGemPass = ENV['RUBYGEMSPASSWORD']
 
-ret = RestClient::Request.new(
+token = RestClient::Request.new(
   :method => :get,
   :url => 'https://rubygems.org/api/v1/api_key.yaml',
   :user => rubyGemUserName,
   :password => rubyGemPass,
-  ).execute
+).execute
 
-  File.open('~/Desktop/.gem/credentials2', 'w') { |file| file.write(ret) }
-=end
-
-puts File.directory?(Dir.home + '/.gem')
+Dir.mkdir Dir.home + '/.gem'
+File.open(Dir.home + '/.gem/credentials', 'w') { |file| file.write(token) }
