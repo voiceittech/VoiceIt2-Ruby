@@ -209,27 +209,21 @@ class TestVoiceIt2 < Test::Unit::TestCase
     
     # Voice Enrollments
     ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', './enrollmentArmaan1.wav'))
-    puts ret
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', './enrollmentArmaan2.wav'))
-    puts ret
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', './enrollmentArmaan3.wav'))
-    puts ret
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', './enrollmentArmaan1.wav'))
-    puts ret
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', './enrollmentArmaan2.wav'))
-    puts ret
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', './enrollmentArmaan3.wav'))
-    puts ret
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -240,6 +234,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     # Identify Voice
     ret = JSON.parse(myVoiceIt.voiceIdentification(groupId, 'en-US', './verificationArmaan1.wav'))
+    puts ret
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
@@ -284,6 +279,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     # Identify Voice by URL
     ret = JSON.parse(myVoiceIt.voiceIdentificationByUrl(groupId, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/verificationArmaan1.wav'))
+    puts ret
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
