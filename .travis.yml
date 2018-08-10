@@ -5,7 +5,7 @@ before_script:
 - gem install rest-client
 script: ruby Tests.rb
 after_success:
-- curl -u $RUBYGEMUSERNAME:$RUBYGEMPASSWORD https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials && chmod 0600 ~/.gem/credentials && ruby UpdateGem.rb
+- curl -u $RUBYGEMUSERNAME:$RUBYGEMPASSWORD https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials && chmod 0600 ~/.gem/credentials && cat ~/.gem/credentials && ruby UpdateGem.rb
 notifications:
   slack:
     secure: s8a/HGSCMQUL42k9saLNAOmruGqB9FFI0LjMRB0aoh1rOOjDEFLHrg21veh4oMtZF6eGbKyw7IJzKM/VS/Q77/bLZscWT5p7XmWsG2xwLdzQUinK2ouyoeL3+bkk04o9kLP8YjRNsCUmq9Y3QCv/gUcx2cfSiZdeBmuwcaHCb7nu9TepvIdeyQIBXrzdIY2yt3nMJlIDb33AGm0TXqNCXf+1zc4htOu0xbIBs1lSQx3BEJAZNDBesg+HbTlsuONReUrldBfysboVEz3OZhbo0zi5/FkPYDSSoq01ppMIMcFKqcrfSzJE4aJkTNVJjX5DwEqTCHQvTGePWn5j/KXpNj5dbzAAy6zAddL8H/piQsAnG7myCOWlgBMYs3KU2Uk0N55vON2HuqRc9fUyyWcvJFo/gyO0YLMTGKeturmHX3czdvyjy04FcB4cGnBgyDNIfqqzkqRiSnI5uY+Djs5PKeqH8JrJ5ekThod6G4QQzmW75gkZRVnOXArjdQOIse8rzpvwhxZuNroZT++N72/Ou4abqsQfN0fO6+dWBkEat+/t4vBmWGue2lWN1r38aVQ6VVI+lWMOp5s6NUfR3XhdDS70qLfDvtBLjvL7hE6z8RtbBVJAe2eJ0ihz9evTg2mhwCtHNQZflx5RVITbEB7pwJu0I9w9ebKcbOyMeByEX9M=
