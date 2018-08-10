@@ -32,4 +32,4 @@ end"
 File.open('./VoiceIt2.gemspec', 'w') { |file| file.write(gemspec) }
 
 system 'gem build VoiceIt2.gemspec'
-system 'gem push VoiceIt2' + newVersion + '.gem'
+system 'gem push VoiceIt2-' + newVersion + '.gem'
