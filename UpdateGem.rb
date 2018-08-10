@@ -8,10 +8,6 @@ oldVersionArray = oldVersion.split('.')
 oldVersionArray[2] = (oldVersionArray[2].to_i + 1).to_s
 newVersion = oldVersionArray.join('.')
 
-# Move ./VoiceIt2.rb to ./lib/VoiceIt2
-# Dir.mkdir './lib'
-# File.rename ./VoiceIt2.rb, ./lib/VoiceIt2.rb
-
 date = Time.now.strftime("%Y-%m-%d")
 
 # Generate Gemspec file

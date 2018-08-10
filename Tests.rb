@@ -63,7 +63,6 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal('SUCC', ret['responseCode'])
   end
 
-=begin
   def test_video() # video enrollment, video verification, video identification, delete video enrollment (and by URL respectively)
     # Download files to use
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan1.mov', './videoEnrollmentArmaan1.mov')
@@ -347,6 +346,5 @@ class TestVoiceIt2 < Test::Unit::TestCase
     File.delete('./faceEnrollmentArmaan3.mp4')
     File.delete('./faceVerificationArmaan1.mp4')
   end
-=end
 
 end
