@@ -251,6 +251,8 @@ class TestVoiceIt2 < Test::Unit::TestCase
     groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']
     myVoiceIt.addUserToGroup(groupId, userId1)
     myVoiceIt.addUserToGroup(groupId, userId2)
+    puts userId1
+    puts userId2
 
     # Voice Enrollments by URL
     ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan1.wav'))
