@@ -7,10 +7,6 @@ oldVersion = %x( gem search voiceit2 )[/\((.*?)\)/, 1]
 oldVersionArray = oldVersion.split('.')
 commit = %x( git log -1 --pretty=%B | head -n 1 )
 if commit.include? "RELEASE"
-
-
-  system 'gem build VoiceIt2.gemspec'
-  system 'gem push VoiceIt2-' + newVersion + '.gem'
   if commit.include? "RELEASEMAJOR"
     oldVersionArray[0] = (oldVersionArray[0].to_i + 1).to_s
     oldVersionArray[1] = '0'
@@ -41,5 +37,8 @@ if commit.include? "RELEASE"
       'http://rubygems.org/gems/hola'
     s.license       = 'MIT'
   end"
+
   File.open('./VoiceIt2.gemspec', 'w') { |file| file.write(gemspec) }
+  system 'gem build VoiceIt2.gemspec'
+  system 'gem push VoiceIt2-' + newVersion + '.gem'
 end
