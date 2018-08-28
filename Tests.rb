@@ -381,7 +381,8 @@ class TestVoiceIt2 < Test::Unit::TestCase
     rescue => e
       assert_equal("No such file or directory ", e.message.split("@").first)
     end
-    ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId1, './faceEnrollmentArmaan1.mp4'))
+    ret = myVoiceIt.createFaceEnrollment(userId1, './faceEnrollmentArmaan1.mp4')
+    puts ret
     ret = JSON.parse(ret)
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
