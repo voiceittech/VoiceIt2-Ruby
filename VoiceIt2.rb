@@ -76,10 +76,24 @@ class VoiceIt2
         e.response
   end
 
-  def getAllEnrollmentsForUser(userId)
+  def getAllVoiceEnrollmentsForUser(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'enrollments/' + userId,
+      :url => @BASE_URL.to_s + 'enrollments/voice/' + userId,
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
+    rescue => e
+        e.response
+  end
+
+  def getAllVideoEnrollmentsForUser(userId)
+    return RestClient::Request.new(
+      :method => :get,
+      :url => @BASE_URL.to_s + 'enrollments/video/' + userId,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -104,6 +118,48 @@ class VoiceIt2
         e.response
   end
 
+  def deleteAllVoiceEnrollmentsForUser(userId)
+    return RestClient::Request.new(
+      :method => :delete,
+      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/voice',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
+    rescue => e
+        e.response
+  end
+
+  def deleteAllFaceEnrollmentsForUser(userId)
+    return RestClient::Request.new(
+      :method => :delete,
+      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/face',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
+    rescue => e
+        e.response
+  end
+
+  def deleteAllVideoEnrollmentsForUser(userId)
+    return RestClient::Request.new(
+      :method => :delete,
+      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/video',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+
+    rescue => e
+        e.response
+  end
+
   def getFaceEnrollmentsForUser(userId)
     return RestClient::Request.new(
       :method => :get,
@@ -118,29 +174,34 @@ class VoiceIt2
         e.response
   end
 
-  def createVoiceEnrollment(userId, contentLanguage, filePath)
-    return  RestClient::Request.new(
-      :method => :post,
-      :url => @BASE_URL.to_s + 'enrollments',
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35'
-      },
-      :payload => {
-        :multipart => true,
-        :userId => userId,
-        :contentLanguage => contentLanguage,
-        :recording => File.new(filePath, 'rb')
-        }).execute
-    rescue => e
-        e.response
-  end
+  def createVoiceEnrollment(userId, contentLanguage, phrase, filePath)
+      return RestClient::Request.new(
+        :method => :post,
+        :url => @BASE_URL.to_s + 'enrollments/voice',
+        :user => @api_key,
+        :password => @api_token,
+        :headers => {
+          platformId: '35'
+        },
+        :payload => {
+          :multipart => true,
+          :phrase => phrase,
+          :userId => userId,
+          :contentLanguage => contentLanguage,
+          :recording => File.new(filePath, 'rb')
+          }).execute
+      rescue => e
+        if e.class == Errno::ENOENT
+          raise e.message
+        else
+          e.response
+        end
+      end
 
-  def createVoiceEnrollmentByUrl(userId, contentLanguage, fileUrl)
+  def createVoiceEnrollmentByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'enrollments/byUrl',
+      :url => @BASE_URL.to_s + 'enrollments/voice/byUrl',
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -148,15 +209,20 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
         :fileUrl => fileUrl
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
-  def createFaceEnrollment(userId, filePath, doBlinkDetection = false)
+  def createFaceEnrollment(userId,  filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'enrollments/face',
@@ -172,10 +238,33 @@ class VoiceIt2
         :doBlinkDetection => doBlinkDetection
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def createFaceEnrollmentByUrl(userId, fileUrl, doBlinkDetection = false)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => @BASE_URL.to_s + 'enrollments/face/byUrl',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
+      :payload => {
+        :multipart => true,
+        :userId => userId,
+        :fileUrl => fileUrl,
+        :doBlinkDetection => doBlinkDetection
+        }).execute
+    rescue => e
         e.response
   end
 
-  def createVideoEnrollment(userId, contentLanguage, filePath, doBlinkDetection = false)
+  def createVideoEnrollment(userId, contentLanguage,  phrase, filePath,doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'enrollments/video',
@@ -186,16 +275,21 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
         :video => File.new(filePath, 'rb'),
         :doBlinkDetection => doBlinkDetection
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
-  def createVideoEnrollmentByUrl(userId, contentLanguage, fileUrl, doBlinkDetection = false)
+  def createVideoEnrollmentByUrl(userId, contentLanguage,  phrase, fileUrl, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'enrollments/video/byUrl',
@@ -206,16 +300,21 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
         :fileUrl => fileUrl,
         :doBlinkDetection => doBlinkDetection
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
-  def deleteFaceEnrollment(userId, faceEnrollmentId)
+  def deleteFaceEnrollmentForUser(userId, faceEnrollmentId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/face/' + userId + '/' + faceEnrollmentId.to_s,
@@ -228,10 +327,23 @@ class VoiceIt2
         e.response
   end
 
-  def deleteEnrollmentForUser(userId, enrollmentId)
+  def deleteVoiceEnrollmentForUser(userId, voiceEnrollmentId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/' + enrollmentId.to_s,
+      :url => @BASE_URL.to_s + 'enrollments/voice/' + userId + '/' + voiceEnrollmentId.to_s,
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+    rescue => e
+        e.response
+  end
+
+  def deleteVideoEnrollmentForUser(userId, enrollmentId)
+    return RestClient::Request.new(
+      :method => :delete,
+      :url => @BASE_URL.to_s + 'enrollments/video/' + userId + '/' + enrollmentId.to_s,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -246,6 +358,19 @@ class VoiceIt2
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'groups',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+    rescue => e
+        e.response
+  end
+
+  def getAllPhrases(contentLanguage)
+    return RestClient::Request.new(
+      :method => :get,
+      :url => @BASE_URL.to_s + 'phrases/' + contentLanguage,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -347,10 +472,10 @@ class VoiceIt2
         e.response
   end
 
-  def voiceVerification(userId, contentLanguage, filePath)
+  def voiceVerification(userId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification',
+      :url => @BASE_URL.to_s + 'verification/voice',
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -358,18 +483,23 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
         :recording => File.new(filePath, 'rb')
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
-  def voiceVerificationByUrl(userId, contentLanguage, fileUrl)
+  def voiceVerificationByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification/byUrl',
+      :url => @BASE_URL.to_s + 'verification/voice/byUrl',
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -377,12 +507,17 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
         :fileUrl => fileUrl
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
   def faceVerification(userId, filePath, doBlinkDetection = false)
@@ -401,10 +536,33 @@ class VoiceIt2
         :video => File.new(filePath, 'rb')
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def faceVerificationByUrl(userId, fileUrl, doBlinkDetection = false)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => @BASE_URL.to_s + 'verification/face/byUrl',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
+      :payload => {
+        :multipart => true,
+        :userId => userId,
+        :doBlinkDetection => doBlinkDetection,
+        :fileUrl => fileUrl
+        }).execute
+    rescue => e
         e.response
   end
 
-  def videoVerification(userId, contentLanguage, filePath, doBlinkDetection = false)
+  def videoVerification(userId, contentLanguage, phrase, filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'verification/video',
@@ -416,15 +574,20 @@ class VoiceIt2
       :payload => {
         :multipart => true,
         :userId => userId,
+        :phrase => phrase,
         :contentLanguage => contentLanguage,
         :doBlinkDetection => doBlinkDetection,
         :video => File.new(filePath, 'rb')
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
-  def videoVerificationByUrl(userId, contentLanguage, fileUrl, doBlinkDetection = false)
+  def videoVerificationByUrl(userId, contentLanguage, phrase, fileUrl, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'verification/video/byUrl',
@@ -435,8 +598,103 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
+        :doBlinkDetection => doBlinkDetection,
+        :fileUrl => fileUrl
+        }).execute
+    rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def voiceIdentification(groupId, contentLanguage, phrase, filePath)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => @BASE_URL.to_s + 'identification/voice',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
+      :payload => {
+        :multipart => true,
+        :phrase => phrase,
+        :groupId => groupId,
+        :contentLanguage => contentLanguage,
+        :recording => File.new(filePath, 'rb')
+        }).execute
+    rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def voiceIdentificationByUrl(groupId, contentLanguage, phrase, fileUrl)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => @BASE_URL.to_s + 'identification/voice/byUrl',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
+      :payload => {
+        :multipart => true,
+        :phrase => phrase,
+        :groupId => groupId,
+        :contentLanguage => contentLanguage,
+        :fileUrl => fileUrl
+        }).execute
+    rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def faceIdentification(groupId, filePath, doBlinkDetection = false)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => @BASE_URL.to_s + 'identification/face',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
+      :payload => {
+        :multipart => true,
+        :groupId => groupId,
+        :doBlinkDetection => doBlinkDetection,
+        :video => File.new(filePath, 'rb')
+        }).execute
+    rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def faceIdentificationByUrl(groupId,fileUrl, doBlinkDetection = false)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => @BASE_URL.to_s + 'identification/face/byUrl',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      },
+      :payload => {
+        :multipart => true,
+        :groupId => groupId,
         :doBlinkDetection => doBlinkDetection,
         :fileUrl => fileUrl
         }).execute
@@ -444,45 +702,7 @@ class VoiceIt2
         e.response
   end
 
-  def voiceIdentification(groupId, contentLanguage, filePath)
-    return  RestClient::Request.new(
-      :method => :post,
-      :url => @BASE_URL.to_s + 'identification',
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35'
-      },
-      :payload => {
-        :multipart => true,
-        :groupId => groupId,
-        :contentLanguage => contentLanguage,
-        :recording => File.new(filePath, 'rb')
-        }).execute
-    rescue => e
-        e.response
-  end
-
-  def voiceIdentificationByUrl(groupId, contentLanguage, fileUrl)
-    return  RestClient::Request.new(
-      :method => :post,
-      :url => @BASE_URL.to_s + 'identification/byUrl',
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35'
-      },
-      :payload => {
-        :multipart => true,
-        :groupId => groupId,
-        :contentLanguage => contentLanguage,
-        :fileUrl => fileUrl
-        }).execute
-    rescue => e
-        e.response
-  end
-
-  def videoIdentification(groupId, contentLanguage, filePath, doBlinkDetection = false)
+  def videoIdentification(groupId, contentLanguage, phrase, filePath, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'identification/video',
@@ -493,16 +713,21 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :groupId => groupId,
         :contentLanguage => contentLanguage,
         :doBlinkDetection => doBlinkDetection,
         :video => File.new(filePath, 'rb')
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
-  def videoIdentificationByUrl(groupId, contentLanguage, fileUrl, doBlinkDetection = false)
+  def videoIdentificationByUrl(groupId, contentLanguage, phrase, fileUrl, doBlinkDetection = false)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'identification/video/byUrl',
@@ -513,13 +738,18 @@ class VoiceIt2
       },
       :payload => {
         :multipart => true,
+        :phrase => phrase,
         :groupId => groupId,
         :contentLanguage => contentLanguage,
         :doBlinkDetection => doBlinkDetection,
         :fileUrl => fileUrl
         }).execute
     rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
         e.response
+      end
   end
 
 

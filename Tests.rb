@@ -55,6 +55,9 @@ class TestVoiceIt2 < Test::Unit::TestCase
     ret = JSON.parse(myVoiceIt.removeUserFromGroup(groupId, userId))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.getAllPhrases('en-US'))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.deleteUser(userId))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
@@ -81,51 +84,57 @@ class TestVoiceIt2 < Test::Unit::TestCase
     groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']
     myVoiceIt.addUserToGroup(groupId, userId1)
     myVoiceIt.addUserToGroup(groupId, userId2)
-    
+
     # Video Enrollments
-    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', './videoEnrollmentArmaan1.mov'))
+    begin
+      ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './enrollmentArmaan.mov'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentArmaan1.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     enrollmentId1 = ret['id']
-    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', './videoEnrollmentArmaan2.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentArmaan2.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     enrollmentId2 = ret['id']
-    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', './videoEnrollmentArmaan3.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentArmaan3.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     enrollmentId3 = ret['id']
-    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId2, 'en-US', './videoEnrollmentStephen1.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId2, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentStephen1.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId2, 'en-US', './videoEnrollmentStephen2.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId2, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentStephen2.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId2, 'en-US', './videoEnrollmentStephen3.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId2, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentStephen3.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Verify Video
-    ret = JSON.parse(myVoiceIt.videoVerification(userId1, 'en-US', './videoVerificationArmaan1.mov'))
+    begin
+      ret = JSON.parse(myVoiceIt.videoVerification(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoVerificationArmaan.mov'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.videoVerification(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoVerificationArmaan1.mov'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Identify Video
-    ret = JSON.parse(myVoiceIt.videoIdentification(groupId, 'en-US', './videoVerificationArmaan1.mov'))
+    begin
+      ret = JSON.parse(myVoiceIt.videoIdentification(groupId, 'en-US', 'Never forget tomorrow is a new day', './videoVerificationArmaan.mov'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.videoIdentification(groupId, 'en-US', 'Never forget tomorrow is a new day', './videoVerificationArmaan1.mov'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
 
     # Delete Enrollments
-    ret = JSON.parse(myVoiceIt.deleteEnrollmentForUser(userId1, enrollmentId1))
-    assert_equal(200, ret['status'])
-    assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.deleteEnrollmentForUser(userId1, enrollmentId2))
-    assert_equal(200, ret['status'])
-    assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.deleteEnrollmentForUser(userId1, enrollmentId3))
-    assert_equal(200, ret['status'])
-    assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId2))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
@@ -141,38 +150,53 @@ class TestVoiceIt2 < Test::Unit::TestCase
     myVoiceIt.addUserToGroup(groupId, userId2)
 
     # Video Enrollments by URL
-    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan1.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId1, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan1.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     enrollmentId1 = ret['id']
-    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan2.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId1, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan2.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     enrollmentId2 = ret['id']
-    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan3.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId1, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentArmaan3.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     enrollmentId3 = ret['id']
-    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId2, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen1.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId2, 'en-US', 'Never forget tomorrow is a new day', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen1.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId2, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen2.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId2, 'en-US', 'Never forget tomorrow is a new day', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen2.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId2, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen3.mov'))
+    ret = JSON.parse(myVoiceIt.createVideoEnrollmentByUrl(userId2, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen3.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Verify Video by URL
-    ret = JSON.parse(myVoiceIt.videoVerificationByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoVerificationArmaan1.mov'))
+    ret = JSON.parse(myVoiceIt.videoVerificationByUrl(userId1, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoVerificationArmaan1.mov'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Identify Video by URL
-    ret = JSON.parse(myVoiceIt.videoIdentificationByUrl(groupId, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoVerificationArmaan1.mov'))
+    ret = JSON.parse(myVoiceIt.videoIdentificationByUrl(groupId, 'en-US', 'Never forget tomorrow is a new day', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoVerificationArmaan1.mov'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
+
+    #Get all video Enrollments
+    ret = JSON.parse(myVoiceIt.getAllVideoEnrollmentsForUser(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    #Delete video enrollment for user
+    ret = JSON.parse(myVoiceIt.deleteVideoEnrollmentForUser(userId1, enrollmentId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    #Delete All Video Enrollments for user
+    ret = JSON.parse(myVoiceIt.deleteAllVideoEnrollmentsForUser(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
 
     myVoiceIt.deleteUser(userId1)
     myVoiceIt.deleteUser(userId2)
@@ -206,34 +230,49 @@ class TestVoiceIt2 < Test::Unit::TestCase
     groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']
     myVoiceIt.addUserToGroup(groupId, userId1)
     myVoiceIt.addUserToGroup(groupId, userId2)
-    
+
     # Voice Enrollments
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', './enrollmentArmaan1.wav'))
+    begin
+      ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './enrollmentArmaan.wav'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './enrollmentArmaan1.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', './enrollmentArmaan2.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US',  'Never forget tomorrow is a new day','./enrollmentArmaan2.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', './enrollmentArmaan3.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US',  'Never forget tomorrow is a new day','./enrollmentArmaan3.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', './enrollmentStephen1.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', 'Never forget tomorrow is a new day', './enrollmentStephen1.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', './enrollmentStephen2.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', 'Never forget tomorrow is a new day', './enrollmentStephen2.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', './enrollmentStephen3.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId2, 'en-US', 'Never forget tomorrow is a new day', './enrollmentStephen3.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Verify Voice
-    ret = JSON.parse(myVoiceIt.voiceVerification(userId1, 'en-US', './verificationArmaan1.wav'))
+    begin
+      ret = JSON.parse(myVoiceIt.voiceVerification(userId1, 'en-US', 'Never forget tomorrow is a new day', './verificationArmaan.wav'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.voiceVerification(userId1, 'en-US',  'Never forget tomorrow is a new day','./verificationArmaan1.wav'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Identify Voice
-    ret = JSON.parse(myVoiceIt.voiceIdentification(groupId, 'en-US', './verificationArmaan1.wav'))
+    begin
+      ret = JSON.parse(myVoiceIt.voiceIdentification(groupId, 'en-US', 'Never forget tomorrow is a new day', './verificationArmaan.wav'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.voiceIdentification(groupId, 'en-US', 'Never forget tomorrow is a new day', './verificationArmaan1.wav'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
@@ -252,35 +291,52 @@ class TestVoiceIt2 < Test::Unit::TestCase
     myVoiceIt.addUserToGroup(groupId, userId2)
 
     # Voice Enrollments by URL
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan1.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan1.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan2.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan2.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan3.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId1, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentArmaan3.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId2, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentStephen1.wav'))
+    voiceEnrollmentId1 =  ret['id']
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId2, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentStephen1.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId2, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentStephen2.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId2, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentStephen2.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId2, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentStephen3.wav'))
+    ret = JSON.parse(myVoiceIt.createVoiceEnrollmentByUrl(userId2, 'en-US',  'Never forget tomorrow is a new day','https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/enrollmentStephen3.wav'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Verify Voice by URL
-    ret = JSON.parse(myVoiceIt.voiceVerificationByUrl(userId1, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/verificationArmaan1.wav'))
+    ret = JSON.parse(myVoiceIt.voiceVerificationByUrl(userId1, 'en-US', 'Never forget tomorrow is a new day', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/verificationArmaan1.wav'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     # Identify Voice by URL
-    ret = JSON.parse(myVoiceIt.voiceIdentificationByUrl(groupId, 'en-US', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/verificationArmaan1.wav'))
+    ret = JSON.parse(myVoiceIt.voiceIdentificationByUrl(groupId, 'en-US', 'Never forget tomorrow is a new day', 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/verificationArmaan1.wav'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
+
+    # Delete Voice Enrollment
+    ret = JSON.parse(myVoiceIt.deleteVoiceEnrollmentForUser(userId1, voiceEnrollmentId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+
+    #Delete all voice enrollments for user
+    ret = JSON.parse(myVoiceIt.deleteAllVoiceEnrollmentsForUser(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    #Get all voice Enrollments
+    ret = JSON.parse(myVoiceIt.getAllVoiceEnrollmentsForUser(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
 
     myVoiceIt.deleteUser(userId1)
     myVoiceIt.deleteUser(userId2)
@@ -302,49 +358,107 @@ class TestVoiceIt2 < Test::Unit::TestCase
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceEnrollmentArmaan2.mp4', './faceEnrollmentArmaan2.mp4')
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceEnrollmentArmaan3.mp4', './faceEnrollmentArmaan3.mp4')
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationArmaan1.mp4', './faceVerificationArmaan1.mp4')
+    download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationArmaan1.mp4', './faceVerificationArmaan2.mp4')
+    download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen1.mov', './faceEnrollmentStephen1.mov')
+    download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationStephen1.mp4', './faceVerificationStephen1.mp4')
 
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
     myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
-    userId = JSON.parse(myVoiceIt.createUser())['userId']
+    userId1 = JSON.parse(myVoiceIt.createUser())['userId']
+    userId2 = JSON.parse(myVoiceIt.createUser())['userId']
+    groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']
+    myVoiceIt.addUserToGroup(groupId, userId1)
+    myVoiceIt.addUserToGroup(groupId, userId2)
 
     # Face Enrollments
-    ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId, './faceEnrollmentArmaan1.mp4'))
+    begin
+      ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId1, './faceEnrollmentArmaan.mp4'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId1, './faceEnrollmentArmaan1.mp4'))
+    assert_equal(201, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId2, './faceEnrollmentStephen1.mov'))
+    assert_equal(201, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    # Face Verification
+    begin
+      ret = JSON.parse(myVoiceIt.faceVerification(userId1, './faceVerificationArmaan.mp4'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.faceVerification(userId1, './faceVerificationArmaan1.mp4'))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.faceVerification(userId2, './faceVerificationStephen1.mp4'))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    #Face Identification
+    begin
+      ret = JSON.parse(myVoiceIt.faceIdentification(groupId, './faceVerificationArmaan.mp4'))
+    rescue => e
+      assert_equal("No such file or directory ", e.message.split("@").first)
+    end
+    ret = JSON.parse(myVoiceIt.faceIdentification(groupId, './faceVerificationArmaan2.mp4'))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    assert_equal(userId1, ret['userId'])
+
+    #Prep For URL Calls
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId2))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    #Face Enrollments by URL
+    ret = JSON.parse(myVoiceIt.createFaceEnrollmentByUrl(userId1,'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceEnrollmentArmaan1.mp4'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     faceEnrollmentId1 = ret['faceEnrollmentId']
-    ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId, './faceEnrollmentArmaan2.mp4'))
+    ret = JSON.parse(myVoiceIt.createFaceEnrollmentByUrl(userId2,'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen1.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    faceEnrollmentId2 = ret['faceEnrollmentId']
-    ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId, './faceEnrollmentArmaan3.mp4'))
-    assert_equal(201, ret['status'])
-    assert_equal('SUCC', ret['responseCode'])
-    faceEnrollmentId3 = ret['faceEnrollmentId']
 
-    # Face Verification
-    ret = JSON.parse(myVoiceIt.faceVerification(userId, './faceVerificationArmaan1.mp4'))
+    #Face Verification by URL
+    ret = JSON.parse(myVoiceIt.faceVerificationByUrl(userId1, 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationArmaan1.mp4'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.faceVerificationByUrl(userId2, 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationStephen1.mp4'))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    #Face Identificaiton by URL
+    ret = JSON.parse(myVoiceIt.faceIdentificationByUrl(groupId, 'https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationArmaan1.mp4'))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    assert_equal(userId1, ret['userId'])
 
     # Delete Face Enrollment
-    ret = JSON.parse(myVoiceIt.deleteFaceEnrollment(userId, faceEnrollmentId1))
-    assert_equal(200, ret['status'])
-    assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.deleteFaceEnrollment(userId, faceEnrollmentId2))
-    assert_equal(200, ret['status'])
-    assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.deleteFaceEnrollment(userId, faceEnrollmentId3))
+    ret = JSON.parse(myVoiceIt.deleteFaceEnrollmentForUser(userId1, faceEnrollmentId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
-    myVoiceIt.deleteUser(userId)
+    #Delete all face enrollments for user
+    ret = JSON.parse(myVoiceIt.deleteAllFaceEnrollmentsForUser(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
+    myVoiceIt.deleteUser(userId1)
+    myVoiceIt.deleteUser(userId2)
 
     # Delete files used
     File.delete('./faceEnrollmentArmaan1.mp4')
     File.delete('./faceEnrollmentArmaan2.mp4')
     File.delete('./faceEnrollmentArmaan3.mp4')
     File.delete('./faceVerificationArmaan1.mp4')
+    File.delete('./faceVerificationArmaan2.mp4')
+    File.delete('./faceVerificationStephen1.mp4')
+    File.delete('./faceEnrollmentStephen1.mov')
   end
-
 end
