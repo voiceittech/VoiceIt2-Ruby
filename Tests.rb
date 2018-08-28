@@ -64,6 +64,10 @@ class TestVoiceIt2 < Test::Unit::TestCase
     ret = JSON.parse(myVoiceIt.deleteGroup(groupId))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.getAllPhrases('en-US'))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+
   end
 
   def test_video() # video enrollment, video verification, video identification, delete video enrollment (and by URL respectively)
@@ -378,6 +382,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
       assert_equal("No such file or directory ", e.message.split("@").first)
     end
     ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId1, './faceEnrollmentArmaan1.mp4'))
+    ret = JSON.parse(ret)
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId2, './faceEnrollmentStephen1.mov'))
