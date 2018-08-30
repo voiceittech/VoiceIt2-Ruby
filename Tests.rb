@@ -143,7 +143,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(userId1, ret['userId'])
 
     # Delete Enrollments
-    ret = JSON.parse(myVoiceIt.deleteAllEnrollments(userId2))
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId2))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -287,8 +287,8 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     # For URL
     # Create new users and groups
-    myVoiceIt.deleteAllEnrollments(userId1)
-    myVoiceIt.deleteAllEnrollments(userId2)
+    myVoiceIt.deleteAllEnrollmentsForUser(userId1)
+    myVoiceIt.deleteAllEnrollmentsForUser(userId2)
     myVoiceIt.deleteUser(userId1)
     myVoiceIt.deleteUser(userId2)
     myVoiceIt.deleteGroup(groupId)
@@ -420,10 +420,10 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(userId1, ret['userId'])
 
     #Prep For URL Calls
-    ret = JSON.parse(myVoiceIt.deleteAllEnrollments(userId1))
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.deleteAllEnrollments(userId2))
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId2))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
