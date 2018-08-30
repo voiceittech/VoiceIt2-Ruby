@@ -104,7 +104,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteAllEnrollments(userId)
+  def deleteAllEnrollmentsForUser(userId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/' + userId + '/all',
