@@ -76,7 +76,7 @@ class VoiceIt2
         e.response
   end
 
-  def getVoiceEnrollments(userId)
+  def getAllVoiceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'enrollments/voice/' + userId,
@@ -132,7 +132,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteFaceEnrollments(userId)
+  def deleteAllFaceEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/' + userId + '/face',
@@ -160,7 +160,7 @@ class VoiceIt2
         e.response
   end
 
-  def getFaceEnrollments(userId)
+  def getAllFaceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'enrollments/face/' + userId,
