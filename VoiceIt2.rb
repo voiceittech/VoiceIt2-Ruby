@@ -90,7 +90,7 @@ class VoiceIt2
         e.response
   end
 
-  def getVideoEnrollments(userId)
+  def getAllVideoEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'enrollments/video/' + userId,
