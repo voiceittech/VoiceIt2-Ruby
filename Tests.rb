@@ -55,7 +55,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
     ret = JSON.parse(myVoiceIt.removeUserFromGroup(groupId, userId))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.getAllPhrases('en-US'))
+    ret = JSON.parse(myVoiceIt.getPhrases('en-US'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.deleteUser(userId))
@@ -64,7 +64,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
     ret = JSON.parse(myVoiceIt.deleteGroup(groupId))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.getAllPhrases('en-US'))
+    ret = JSON.parse(myVoiceIt.getPhrases('en-US'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -107,6 +107,10 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     enrollmentId3 = ret['id']
+    ret = JSON.parse(myVoiceIt.getVideoEnrollments(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    assert_equal(3, ret['count'])
     ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId2, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentStephen1.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
@@ -139,7 +143,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(userId1, ret['userId'])
 
     # Delete Enrollments
-    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId2))
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollments(userId2))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -188,17 +192,17 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(userId1, ret['userId'])
 
     #Get all video Enrollments
-    ret = JSON.parse(myVoiceIt.getAllVideoEnrollmentsForUser(userId1))
+    ret = JSON.parse(myVoiceIt.getVideoEnrollments(userId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     #Delete video enrollment for user
-    ret = JSON.parse(myVoiceIt.deleteVideoEnrollmentForUser(userId1, enrollmentId1))
+    ret = JSON.parse(myVoiceIt.deleteVideoEnrollment(userId1, enrollmentId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     #Delete All Video Enrollments for user
-    ret = JSON.parse(myVoiceIt.deleteAllVideoEnrollmentsForUser(userId1))
+    ret = JSON.parse(myVoiceIt.deleteAllVideoEnrollments(userId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -283,8 +287,8 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     # For URL
     # Create new users and groups
-    myVoiceIt.deleteAllEnrollmentsForUser(userId1)
-    myVoiceIt.deleteAllEnrollmentsForUser(userId2)
+    myVoiceIt.deleteAllEnrollments(userId1)
+    myVoiceIt.deleteAllEnrollments(userId2)
     myVoiceIt.deleteUser(userId1)
     myVoiceIt.deleteUser(userId2)
     myVoiceIt.deleteGroup(groupId)
@@ -327,18 +331,18 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(userId1, ret['userId'])
 
     # Delete Voice Enrollment
-    ret = JSON.parse(myVoiceIt.deleteVoiceEnrollmentForUser(userId1, voiceEnrollmentId1))
+    ret = JSON.parse(myVoiceIt.deleteVoiceEnrollment(userId1, voiceEnrollmentId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
 
     #Delete all voice enrollments for user
-    ret = JSON.parse(myVoiceIt.deleteAllVoiceEnrollmentsForUser(userId1))
+    ret = JSON.parse(myVoiceIt.deleteAllVoiceEnrollments(userId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     #Get all voice Enrollments
-    ret = JSON.parse(myVoiceIt.getAllVoiceEnrollmentsForUser(userId1))
+    ret = JSON.parse(myVoiceIt.getVoiceEnrollments(userId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -362,7 +366,6 @@ class TestVoiceIt2 < Test::Unit::TestCase
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceEnrollmentArmaan2.mp4', './faceEnrollmentArmaan2.mp4')
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceEnrollmentArmaan3.mp4', './faceEnrollmentArmaan3.mp4')
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationArmaan1.mp4', './faceVerificationArmaan1.mp4')
-    download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationArmaan1.mp4', './faceVerificationArmaan2.mp4')
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/videoEnrollmentStephen1.mov', './faceEnrollmentStephen1.mov')
     download_file('https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/faceVerificationStephen1.mp4', './faceVerificationStephen1.mp4')
 
@@ -384,6 +387,10 @@ class TestVoiceIt2 < Test::Unit::TestCase
     ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId1, './faceEnrollmentArmaan1.mp4'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.getFaceEnrollments(userId1))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    assert_equal(1, ret['count'])
     ret = JSON.parse(myVoiceIt.createFaceEnrollment(userId2, './faceEnrollmentStephen1.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
@@ -407,16 +414,16 @@ class TestVoiceIt2 < Test::Unit::TestCase
     rescue => e
       assert_equal("No such file or directory ", e.message.split("@").first)
     end
-    ret = JSON.parse(myVoiceIt.faceIdentification(groupId, './faceVerificationArmaan2.mp4'))
+    ret = JSON.parse(myVoiceIt.faceIdentification(groupId, './faceVerificationArmaan1.mp4'))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(userId1, ret['userId'])
 
     #Prep For URL Calls
-    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId1))
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollments(userId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.deleteAllEnrollmentsForUser(userId2))
+    ret = JSON.parse(myVoiceIt.deleteAllEnrollments(userId2))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -444,12 +451,12 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(userId1, ret['userId'])
 
     # Delete Face Enrollment
-    ret = JSON.parse(myVoiceIt.deleteFaceEnrollmentForUser(userId1, faceEnrollmentId1))
+    ret = JSON.parse(myVoiceIt.deleteFaceEnrollment(userId1, faceEnrollmentId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
     #Delete all face enrollments for user
-    ret = JSON.parse(myVoiceIt.deleteAllFaceEnrollmentsForUser(userId1))
+    ret = JSON.parse(myVoiceIt.deleteFaceEnrollments(userId1))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
 
@@ -461,7 +468,6 @@ class TestVoiceIt2 < Test::Unit::TestCase
     File.delete('./faceEnrollmentArmaan2.mp4')
     File.delete('./faceEnrollmentArmaan3.mp4')
     File.delete('./faceVerificationArmaan1.mp4')
-    File.delete('./faceVerificationArmaan2.mp4')
     File.delete('./faceVerificationStephen1.mp4')
     File.delete('./faceEnrollmentStephen1.mov')
   end

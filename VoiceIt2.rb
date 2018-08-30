@@ -76,7 +76,7 @@ class VoiceIt2
         e.response
   end
 
-  def getAllVoiceEnrollmentsForUser(userId)
+  def getVoiceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'enrollments/voice/' + userId,
@@ -90,7 +90,7 @@ class VoiceIt2
         e.response
   end
 
-  def getAllVideoEnrollmentsForUser(userId)
+  def getVideoEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'enrollments/video/' + userId,
@@ -104,7 +104,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteAllEnrollmentsForUser(userId)
+  def deleteAllEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/' + userId + '/all',
@@ -118,7 +118,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteAllVoiceEnrollmentsForUser(userId)
+  def deleteAllVoiceEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/' + userId + '/voice',
@@ -132,7 +132,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteAllFaceEnrollmentsForUser(userId)
+  def deleteFaceEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/' + userId + '/face',
@@ -146,7 +146,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteAllVideoEnrollmentsForUser(userId)
+  def deleteAllVideoEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/' + userId + '/video',
@@ -160,7 +160,7 @@ class VoiceIt2
         e.response
   end
 
-  def getFaceEnrollmentsForUser(userId)
+  def getFaceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'enrollments/face/' + userId,
@@ -314,7 +314,7 @@ class VoiceIt2
       end
   end
 
-  def deleteFaceEnrollmentForUser(userId, faceEnrollmentId)
+  def deleteFaceEnrollment(userId, faceEnrollmentId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/face/' + userId + '/' + faceEnrollmentId.to_s,
@@ -327,7 +327,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteVoiceEnrollmentForUser(userId, voiceEnrollmentId)
+  def deleteVoiceEnrollment(userId, voiceEnrollmentId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/voice/' + userId + '/' + voiceEnrollmentId.to_s,
@@ -340,7 +340,7 @@ class VoiceIt2
         e.response
   end
 
-  def deleteVideoEnrollmentForUser(userId, enrollmentId)
+  def deleteVideoEnrollment(userId, enrollmentId)
     return RestClient::Request.new(
       :method => :delete,
       :url => @BASE_URL.to_s + 'enrollments/video/' + userId + '/' + enrollmentId.to_s,
@@ -367,7 +367,7 @@ class VoiceIt2
         e.response
   end
 
-  def getAllPhrases(contentLanguage)
+  def getPhrases(contentLanguage)
     return RestClient::Request.new(
       :method => :get,
       :url => @BASE_URL.to_s + 'phrases/' + contentLanguage,
