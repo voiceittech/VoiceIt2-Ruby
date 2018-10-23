@@ -165,7 +165,7 @@ class VoiceIt2
       :method => :get,
       :url => @BASE_URL.to_s + 'enrollments/face/' + userId,
       :user => @api_key,
-      :password => @api_token
+      :password => @api_token,
       :headers => {
         platformId: '35'
       }).execute
