@@ -262,7 +262,7 @@ class VoiceIt2
         e.response
   end
 
-  def createVideoEnrollment(userId, contentLanguage,  phrase, filePath,doBlinkDetection = false)
+  def createVideoEnrollment(userId, contentLanguage,  phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
       :url => @BASE_URL.to_s + 'enrollments/video',
