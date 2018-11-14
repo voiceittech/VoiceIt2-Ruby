@@ -196,7 +196,7 @@ class VoiceIt2
         else
           e.response
         end
-      end
+  end
 
   def createVoiceEnrollmentByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
@@ -740,5 +740,17 @@ class VoiceIt2
       end
   end
 
+  def createUserToken(userId)
+    return RestClient::Request.new(
+      :method => :post,
+      :url => @BASE_URL.to_s + 'users/' + userId + '/token',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35'
+      }).execute
+    rescue => e
+        e.response
+  end
 
 end
