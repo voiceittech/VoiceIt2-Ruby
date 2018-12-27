@@ -13,6 +13,16 @@ class TestVoiceIt2 < Test::Unit::TestCase
     end
   end
 
+  def test_notification_url() # test webhook URL's
+    viapikey = ENV['VIAPIKEY']
+    viapitoken = ENV['VIAPITOKEN']
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    myVoiceIt.addNotificationUrl('https://voiceit.io')
+    assert_equal(myVoiceIt.notification_url, "?notificationURL=https%3A%2F%2Fvoiceit.io")
+    myVoiceIt.removeNotificationUrl()
+    assert_equal(myVoiceIt.notification_url, '')
+  end
+
   def test_users_groups() # get all users, get all groups, create user, create group, add user to group, remove user from group, delete user delete group
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
