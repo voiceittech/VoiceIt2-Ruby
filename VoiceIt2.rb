@@ -750,15 +750,26 @@ class VoiceIt2
       end
   end
 
-  def createUserToken(userId)
-    return RestClient::Request.new(
-      :method => :post,
-      :url => @BASE_URL.to_s + 'users/' + userId + '/token' + @notification_url,
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35'
-      }).execute
+  def createUserToken(userId, timeOut)
+    if @notification_url == ''
+      return RestClient::Request.new(
+        :method => :post,
+        :url => @BASE_URL.to_s + 'users/' + userId + '/token?timeOut=' + timeOut.to_s,
+        :user => @api_key,
+        :password => @api_token,
+        :headers => {
+          platformId: '35'
+        }).execute
+    else
+      return RestClient::Request.new(
+        :method => :post,
+        :url => @BASE_URL.to_s + 'users/' + userId + '/token' + @notification_url + '&timeOut=' + timeOut.to_s,
+        :user => @api_key,
+        :password => @api_token,
+        :headers => {
+          platformId: '35'
+        }).execute
+    end
     rescue => e
         e.response
   end

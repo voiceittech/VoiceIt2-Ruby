@@ -65,7 +65,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
     ret = JSON.parse(myVoiceIt.removeUserFromGroup(groupId, userId))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
-    ret = JSON.parse(myVoiceIt.createUserToken(userId))
+    ret = JSON.parse(myVoiceIt.createUserToken(userId, 5))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.getPhrases('en-US'))
