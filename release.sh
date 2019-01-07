@@ -1,6 +1,5 @@
 #!/bin/bash
 commit=$(git log -1 --pretty=%B | head -n 1)
-gem search voiceit2 | awk 'NR==1{print $2}' | tr -d "()"
 version=$(echo $(gem search voiceit2 | awk 'NR==1{print $2}' | tr -d "()") | tr "." "\n")
 set -- $version
 major=$1
