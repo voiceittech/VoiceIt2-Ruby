@@ -18,7 +18,7 @@ then
       "username": "Release Wrapper Gate",
         "attachments": [
             {
-                "text": "Packaging '$reponame' version '$version' failed. because script could not get current version",
+                "text": "Packaging '$reponame' failed because script could not get current version",
                 "color": "danger"
             }
         ]
@@ -84,7 +84,7 @@ then
       }' 'https://hooks.slack.com/services/'$SLACKPARAM1'/'$SLACKPARAM2'/'$SLACKPARAM3
       exit 1
     fi
-#
+
     curl -X POST -H 'Content-type: application/json' --data '{
       "icon_url": "https://s3.amazonaws.com/voiceit-api2-testing-files/test-data/TravisCI-Mascot-1.png",
       "username": "Release Wrapper Gate",
