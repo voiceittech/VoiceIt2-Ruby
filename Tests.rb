@@ -17,7 +17,9 @@ class TestVoiceIt2 < Test::Unit::TestCase
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
     myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
-    File.write(ENV['HOME'] + '/' + 'platformVersion', VoiceIt2::VERSION)
+    if ENV['BOXFUSE_ENV'] == 'voiceittest'
+      File.write(ENV['HOME'] + '/' + 'platformVersion', VoiceIt2::VERSION)
+    end
     myVoiceIt.addNotificationUrl('https://voiceit.io')
     assert_equal(myVoiceIt.notification_url, "?notificationURL=https%3A%2F%2Fvoiceit.io")
     myVoiceIt.removeNotificationUrl()
