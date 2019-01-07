@@ -7,7 +7,7 @@ script: ruby Tests.rb
 after_success:
   - curl -u $RUBYGEMSUSERNAME:$RUBYGEMSPASSWORD https://rubygems.org/api/v1/api_key.yaml > ~/.gem/credentials
   - chmod 0600 ~/.gem/credentials
-  - ruby UpdateGem.rb
+  - ./release.sh
   - ./email.sh
 notifications:
   slack:

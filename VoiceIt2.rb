@@ -2,10 +2,13 @@
 require 'rest-client'
 require 'cgi'
 
+
 class VoiceIt2
 
+  BASE_URL = 'https://api.voiceit.io/'
+  VERSION = '3.2.0'
+
   def initialize(key, tok)
-    @BASE_URL = URI('https://api.voiceit.io/')
     @notification_url = ""
     @api_key = key
     @api_token = tok
@@ -22,11 +25,12 @@ class VoiceIt2
   def getAllUsers
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'users' + @notification_url,
+      :url => BASE_URL + 'users' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -35,11 +39,12 @@ class VoiceIt2
   def createUser
     return RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'users' + @notification_url,
+      :url => BASE_URL + 'users' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -48,11 +53,12 @@ class VoiceIt2
   def checkUserExists(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'users/' + userId + @notification_url,
+      :url => BASE_URL + 'users/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -61,11 +67,12 @@ class VoiceIt2
   def deleteUser(userId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'users/' + userId + @notification_url,
+      :url => BASE_URL + 'users/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -75,11 +82,12 @@ class VoiceIt2
   def getGroupsForUser(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'users/' + userId + '/groups' + @notification_url,
+      :url => BASE_URL + 'users/' + userId + '/groups' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -89,11 +97,12 @@ class VoiceIt2
   def getAllVoiceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'enrollments/voice/' + userId + @notification_url,
+      :url => BASE_URL + 'enrollments/voice/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -103,11 +112,12 @@ class VoiceIt2
   def getAllVideoEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'enrollments/video/' + userId + @notification_url,
+      :url => BASE_URL + 'enrollments/video/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -117,11 +127,12 @@ class VoiceIt2
   def deleteAllEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/all' + @notification_url,
+      :url => BASE_URL + 'enrollments/' + userId + '/all' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -131,11 +142,12 @@ class VoiceIt2
   def deleteAllVoiceEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/voice' + @notification_url,
+      :url => BASE_URL + 'enrollments/' + userId + '/voice' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -145,11 +157,12 @@ class VoiceIt2
   def deleteAllFaceEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/face' + @notification_url,
+      :url => BASE_URL + 'enrollments/' + userId + '/face' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -159,11 +172,12 @@ class VoiceIt2
   def deleteAllVideoEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/' + userId + '/video' + @notification_url,
+      :url => BASE_URL + 'enrollments/' + userId + '/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -173,11 +187,12 @@ class VoiceIt2
   def getAllFaceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'enrollments/face/' + userId + @notification_url,
+      :url => BASE_URL + 'enrollments/face/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -187,11 +202,12 @@ class VoiceIt2
   def createVoiceEnrollment(userId, contentLanguage, phrase, filePath)
       return RestClient::Request.new(
         :method => :post,
-        :url => @BASE_URL.to_s + 'enrollments/voice' + @notification_url,
+        :url => BASE_URL + 'enrollments/voice' + @notification_url,
         :user => @api_key,
         :password => @api_token,
         :headers => {
-          platformId: '35'
+          platformId: '35',
+          platformVersion: VERSION
         },
         :payload => {
           :multipart => true,
@@ -211,11 +227,12 @@ class VoiceIt2
   def createVoiceEnrollmentByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'enrollments/voice/byUrl' + @notification_url,
+      :url => BASE_URL + 'enrollments/voice/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -235,11 +252,12 @@ class VoiceIt2
   def createFaceEnrollment(userId,  filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'enrollments/face' + @notification_url,
+      :url => BASE_URL + 'enrollments/face' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -257,11 +275,12 @@ class VoiceIt2
   def createFaceEnrollmentByUrl(userId, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'enrollments/face/byUrl' + @notification_url,
+      :url => BASE_URL + 'enrollments/face/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -275,11 +294,12 @@ class VoiceIt2
   def createVideoEnrollment(userId, contentLanguage,  phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'enrollments/video' + @notification_url,
+      :url => BASE_URL + 'enrollments/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -299,11 +319,12 @@ class VoiceIt2
   def createVideoEnrollmentByUrl(userId, contentLanguage,  phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'enrollments/video/byUrl' + @notification_url,
+      :url => BASE_URL + 'enrollments/video/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -323,11 +344,12 @@ class VoiceIt2
   def deleteFaceEnrollment(userId, faceEnrollmentId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/face/' + userId + '/' + faceEnrollmentId.to_s + @notification_url,
+      :url => BASE_URL + 'enrollments/face/' + userId + '/' + faceEnrollmentId.to_s + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -336,11 +358,12 @@ class VoiceIt2
   def deleteVoiceEnrollment(userId, voiceEnrollmentId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/voice/' + userId + '/' + voiceEnrollmentId.to_s + @notification_url,
+      :url => BASE_URL + 'enrollments/voice/' + userId + '/' + voiceEnrollmentId.to_s + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -349,11 +372,12 @@ class VoiceIt2
   def deleteVideoEnrollment(userId, enrollmentId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'enrollments/video/' + userId + '/' + enrollmentId.to_s + @notification_url,
+      :url => BASE_URL + 'enrollments/video/' + userId + '/' + enrollmentId.to_s + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
 
     rescue => e
@@ -363,11 +387,12 @@ class VoiceIt2
   def getAllGroups()
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'groups' + @notification_url,
+      :url => BASE_URL + 'groups' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -376,11 +401,12 @@ class VoiceIt2
   def getPhrases(contentLanguage)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'phrases/' + contentLanguage + @notification_url,
+      :url => BASE_URL + 'phrases/' + contentLanguage + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -389,11 +415,12 @@ class VoiceIt2
   def getGroup(groupId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'groups/' + groupId + @notification_url,
+      :url => BASE_URL + 'groups/' + groupId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -402,11 +429,12 @@ class VoiceIt2
   def groupExists(groupId)
     return RestClient::Request.new(
       :method => :get,
-      :url => @BASE_URL.to_s + 'groups/' + groupId + '/exists' + @notification_url,
+      :url => BASE_URL + 'groups/' + groupId + '/exists' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -415,11 +443,12 @@ class VoiceIt2
   def createGroup(description)
     return RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'groups' + @notification_url,
+      :url => BASE_URL + 'groups' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -432,11 +461,12 @@ class VoiceIt2
   def addUserToGroup(groupId, userId)
     return RestClient::Request.new(
       :method => :put,
-      :url => @BASE_URL.to_s + 'groups/addUser' + @notification_url,
+      :url => BASE_URL + 'groups/addUser' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -450,11 +480,12 @@ class VoiceIt2
   def removeUserFromGroup(groupId, userId)
     return RestClient::Request.new(
       :method => :put,
-      :url => @BASE_URL.to_s + 'groups/removeUser' + @notification_url,
+      :url => BASE_URL + 'groups/removeUser' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -468,11 +499,12 @@ class VoiceIt2
   def deleteGroup(groupId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => @BASE_URL.to_s + 'groups/' + groupId + @notification_url,
+      :url => BASE_URL + 'groups/' + groupId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       }).execute
     rescue => e
         e.response
@@ -481,11 +513,12 @@ class VoiceIt2
   def voiceVerification(userId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification/voice' + @notification_url,
+      :url => BASE_URL + 'verification/voice' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -505,11 +538,12 @@ class VoiceIt2
   def voiceVerificationByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification/voice/byUrl' + @notification_url,
+      :url => BASE_URL + 'verification/voice/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -529,11 +563,12 @@ class VoiceIt2
   def faceVerification(userId, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification/face' + @notification_url,
+      :url => BASE_URL + 'verification/face' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -551,11 +586,12 @@ class VoiceIt2
   def faceVerificationByUrl(userId, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification/face/byUrl' + @notification_url,
+      :url => BASE_URL + 'verification/face/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -569,11 +605,12 @@ class VoiceIt2
   def videoVerification(userId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification/video' + @notification_url,
+      :url => BASE_URL + 'verification/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -593,11 +630,12 @@ class VoiceIt2
   def videoVerificationByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'verification/video/byUrl' + @notification_url,
+      :url => BASE_URL + 'verification/video/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -617,11 +655,12 @@ class VoiceIt2
   def voiceIdentification(groupId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'identification/voice' + @notification_url,
+      :url => BASE_URL + 'identification/voice' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -641,11 +680,12 @@ class VoiceIt2
   def voiceIdentificationByUrl(groupId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'identification/voice/byUrl' + @notification_url,
+      :url => BASE_URL + 'identification/voice/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -665,11 +705,12 @@ class VoiceIt2
   def faceIdentification(groupId, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'identification/face' + @notification_url,
+      :url => BASE_URL + 'identification/face' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -687,11 +728,12 @@ class VoiceIt2
   def faceIdentificationByUrl(groupId,fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'identification/face/byUrl' + @notification_url,
+      :url => BASE_URL + 'identification/face/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -705,11 +747,12 @@ class VoiceIt2
   def videoIdentification(groupId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'identification/video' + @notification_url,
+      :url => BASE_URL + 'identification/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -729,11 +772,12 @@ class VoiceIt2
   def videoIdentificationByUrl(groupId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => @BASE_URL.to_s + 'identification/video/byUrl' + @notification_url,
+      :url => BASE_URL + 'identification/video/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35'
+        platformId: '35',
+        platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
@@ -754,20 +798,22 @@ class VoiceIt2
     if @notification_url == ''
       return RestClient::Request.new(
         :method => :post,
-        :url => @BASE_URL.to_s + 'users/' + userId + '/token?timeOut=' + timeOut.to_s,
+        :url => BASE_URL + 'users/' + userId + '/token?timeOut=' + timeOut.to_s,
         :user => @api_key,
         :password => @api_token,
         :headers => {
-          platformId: '35'
+          platformId: '35',
+          platformVersion: VERSION
         }).execute
     else
       return RestClient::Request.new(
         :method => :post,
-        :url => @BASE_URL.to_s + 'users/' + userId + '/token' + @notification_url + '&timeOut=' + timeOut.to_s,
+        :url => BASE_URL + 'users/' + userId + '/token' + @notification_url + '&timeOut=' + timeOut.to_s,
         :user => @api_key,
         :password => @api_token,
         :headers => {
-          platformId: '35'
+          platformId: '35',
+          platformVersion: VERSION
         }).execute
     end
     rescue => e
