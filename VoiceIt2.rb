@@ -794,10 +794,10 @@ class VoiceIt2
       end
   end
 
-  def createUserToken(userId, timeOut)
+  def createUserToken(userId, secondsToTimeout)
     return RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'users/' + userId + '/token?timeOut=' + timeOut.to_s,
+      :url => BASE_URL + 'users/' + userId + '/token?timeOut=' + secondsToTimeout.to_s,
       :user => @api_key,
       :password => @api_token,
       :headers => {
