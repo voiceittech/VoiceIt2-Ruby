@@ -808,6 +808,20 @@ class VoiceIt2
         e.response
   end
 
+  def expireUserTokens(userId)
+    return RestClient::Request.new(
+      :method => :post,
+      :url => BASE_URL + 'users/' + userId + '/expireTokens',
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35',
+        platformVersion: VERSION
+      }).execute
+    rescue => e
+        e.response
+  end
+
   attr_reader :BASE_URL
   attr_reader :notification_url
   attr_reader :api_key
