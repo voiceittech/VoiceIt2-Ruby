@@ -6,7 +6,7 @@ require 'cgi'
 class VoiceIt2
 
   BASE_URL = 'https://api.voiceit.io/'
-  VERSION = '3.3.0'
+  VERSION = '3.4.0'
 
   def initialize(key, tok)
     @notification_url = ""
@@ -128,51 +128,6 @@ class VoiceIt2
     return RestClient::Request.new(
       :method => :delete,
       :url => BASE_URL + 'enrollments/' + userId + '/all' + @notification_url,
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35',
-        platformVersion: VERSION
-      }).execute
-
-    rescue => e
-        e.response
-  end
-
-  def deleteAllVoiceEnrollments(userId)
-    return RestClient::Request.new(
-      :method => :delete,
-      :url => BASE_URL + 'enrollments/' + userId + '/voice' + @notification_url,
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35',
-        platformVersion: VERSION
-      }).execute
-
-    rescue => e
-        e.response
-  end
-
-  def deleteAllFaceEnrollments(userId)
-    return RestClient::Request.new(
-      :method => :delete,
-      :url => BASE_URL + 'enrollments/' + userId + '/face' + @notification_url,
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35',
-        platformVersion: VERSION
-      }).execute
-
-    rescue => e
-        e.response
-  end
-
-  def deleteAllVideoEnrollments(userId)
-    return RestClient::Request.new(
-      :method => :delete,
-      :url => BASE_URL + 'enrollments/' + userId + '/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -339,49 +294,6 @@ class VoiceIt2
       else
         e.response
       end
-  end
-
-  def deleteFaceEnrollment(userId, faceEnrollmentId)
-    return RestClient::Request.new(
-      :method => :delete,
-      :url => BASE_URL + 'enrollments/face/' + userId + '/' + faceEnrollmentId.to_s + @notification_url,
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35',
-        platformVersion: VERSION
-      }).execute
-    rescue => e
-        e.response
-  end
-
-  def deleteVoiceEnrollment(userId, voiceEnrollmentId)
-    return RestClient::Request.new(
-      :method => :delete,
-      :url => BASE_URL + 'enrollments/voice/' + userId + '/' + voiceEnrollmentId.to_s + @notification_url,
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35',
-        platformVersion: VERSION
-      }).execute
-    rescue => e
-        e.response
-  end
-
-  def deleteVideoEnrollment(userId, enrollmentId)
-    return RestClient::Request.new(
-      :method => :delete,
-      :url => BASE_URL + 'enrollments/video/' + userId + '/' + enrollmentId.to_s + @notification_url,
-      :user => @api_key,
-      :password => @api_token,
-      :headers => {
-        platformId: '35',
-        platformVersion: VERSION
-      }).execute
-
-    rescue => e
-        e.response
   end
 
   def getAllGroups()
