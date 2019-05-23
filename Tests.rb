@@ -119,6 +119,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal('SUCC', ret['responseCode'])
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
+    myVoiceIt.createVideoEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentB2.mov')
     ret = JSON.parse(myVoiceIt.createVideoEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoEnrollmentB3.mov'))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
@@ -142,8 +143,8 @@ class TestVoiceIt2 < Test::Unit::TestCase
       assert_equal("No such file or directory ", e.message.split("@").first)
     end
     ret = JSON.parse(myVoiceIt.videoVerification(userId1, 'en-US', 'Never forget tomorrow is a new day', './videoVerificationB1.mov'))
-    assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
+    assert_equal(200, ret['status'])
 
     # Identify Video
     begin
