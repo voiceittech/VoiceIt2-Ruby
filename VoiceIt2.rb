@@ -6,7 +6,7 @@ require 'cgi'
 class VoiceIt2
 
   BASE_URL = 'https://api.voiceit.io/'
-  VERSION = '3.4.0'
+  VERSION = '3.5.0'
 
   def initialize(key, tok)
     @notification_url = ""
@@ -68,6 +68,87 @@ class VoiceIt2
     return RestClient::Request.new(
       :method => :delete,
       :url => BASE_URL + 'users/' + userId + @notification_url,
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35',
+        platformVersion: VERSION
+      }).execute
+
+    rescue => e
+        e.response
+  end
+
+  def createManagedSubAccount(firstName, lastName, email, password, contentLanguage)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => BASE_URL + 'subaccount/managed' + @notification_url,
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35',
+        platformVersion: VERSION
+      },
+      :payload => {
+        :multipart => true,
+        :firstName => firstName,
+        :lastName => lastName,
+        :email => email,
+        :password => password,
+        :contentLanguage => contentLanguage,
+        }).execute
+    rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def createUnmanagedSubAccount(firstName, lastName, email, password, contentLanguage)
+    return  RestClient::Request.new(
+      :method => :post,
+      :url => BASE_URL + 'subaccount/unmanaged' + @notification_url,
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35',
+        platformVersion: VERSION
+      },
+      :payload => {
+        :multipart => true,
+        :firstName => firstName,
+        :lastName => lastName,
+        :email => email,
+        :password => password,
+        :contentLanguage => contentLanguage,
+        }).execute
+    rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
+  end
+
+  def regenerateSubAccountAPIToken(subAccountAPIKey)
+    return RestClient::Request.new(
+      :method => :post,
+      :url => BASE_URL + 'subaccount/' + subAccountAPIKey + @notification_url,
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35',
+        platformVersion: VERSION
+      }).execute
+    rescue => e
+        e.response
+  end
+
+  def deleteSubAccount(subAccountAPIKey)
+    return RestClient::Request.new(
+      :method => :delete,
+      :url => BASE_URL + 'subaccount/' + subAccountAPIKey + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {

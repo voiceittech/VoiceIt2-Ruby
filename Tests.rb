@@ -89,6 +89,29 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
   end
 
+  def test_sub_accounts()
+    viapikey = ENV['VIAPIKEY']
+    viapitoken = ENV['VIAPITOKEN']
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    ret = JSON.parse(myVoiceIt.createManagedSubAccount('Test','Ruby', '', '', ''))
+    assert_equal(201, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    managedSubAccountAPIKey = ret['apiKey']
+    ret = JSON.parse(myVoiceIt.createUnmanagedSubAccount('Test','Ruby', '', '', ''))
+    assert_equal(201, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    unmanagedSubAccountAPIKey = ret['apiKey']
+    ret = JSON.parse(myVoiceIt.regenerateSubAccountAPIToken(managedSubAccountAPIKey))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.deleteSubAccount(managedSubAccountAPIKey))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+    ret = JSON.parse(myVoiceIt.deleteSubAccount(unmanagedSubAccountAPIKey))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
+  end
+
   def test_video() # video enrollment, video verification, video identification, (and by URL respectively)
     # Download files to use
     download_file('https://drive.voiceit.io/files/videoEnrollmentB1.mov', './videoEnrollmentB1.mov')
