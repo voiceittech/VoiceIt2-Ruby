@@ -101,6 +101,9 @@ class TestVoiceIt2 < Test::Unit::TestCase
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     unmanagedSubAccountAPIKey = ret['apiKey']
+    ret = JSON.parse(myVoiceIt.switchSubAccountType(ret['apiKey']))
+    assert_equal(200, ret['status'])
+    assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.regenerateSubAccountAPIToken(managedSubAccountAPIKey))
     assert_equal(200, ret['status'])
     assert_equal('SUCC', ret['responseCode'])

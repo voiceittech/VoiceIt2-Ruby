@@ -6,7 +6,7 @@ require 'cgi'
 class VoiceIt2
 
   BASE_URL = 'https://api.voiceit.io/'
-  VERSION = '3.5.0'
+  VERSION = '3.6.0'
 
   def initialize(key, tok)
     @notification_url = ""
@@ -103,6 +103,20 @@ class VoiceIt2
       else
         e.response
       end
+  end
+
+  def switchSubAccountType(subAccountAPIKey)
+    return RestClient::Request.new(
+      :method => :post,
+      :url => BASE_URL + 'subaccount/' + subAccountAPIKey + '/switchType' + @notification_url,
+      :user => @api_key,
+      :password => @api_token,
+      :headers => {
+        platformId: '35',
+        platformVersion: VERSION
+      }).execute
+    rescue => e
+        e.response
   end
 
   def createUnmanagedSubAccount(firstName, lastName, email, password, contentLanguage)
