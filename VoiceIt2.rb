@@ -6,7 +6,7 @@ require 'cgi'
 class VoiceIt2
 
   BASE_URL = 'https://api.voiceit.io/'
-  VERSION = '3.6.0'
+  VERSION = '3.6.1'
 
   def initialize(key, tok)
     @notification_url = ""
