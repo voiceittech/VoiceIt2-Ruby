@@ -1,6 +1,6 @@
 <img src="./ruby.png" width="100%" style="width:100%" />
 
-# VoiceIt2-Ruby [![travis](https://travis-ci.com/voiceittech/VoiceIt2-Ruby.svg?branch=master)](https://travis-ci.com/voiceittech/VoiceIt2-Ruby)
+# VoiceIt2-Ruby [![travis](https://travis-ci.com/voiceittech/VoiceIt2-Ruby.svg?branch=master)](https://travis-ci.com/voiceittech/VoiceIt2-Ruby) ![version](https://img.shields.io/gem/v/VoiceIt2) ![downloads](https://img.shields.io/gem/dt/VoiceIt2) ![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)
 
 A Ruby wrapper for VoiceIt's API 2.0 featuring Voice + Face Verification and Identification.
 
