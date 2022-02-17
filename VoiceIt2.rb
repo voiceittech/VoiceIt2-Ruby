@@ -5,10 +5,10 @@ require 'cgi'
 
 class VoiceIt2
 
-  BASE_URL = 'https://api.voiceit.io/'
-  VERSION = '3.6.1'
+  VERSION = '3.7.0'
 
-  def initialize(key, tok)
+  def initialize(key, tok, custom_url: 'https://api.voiceit.io')
+    @base_url = custom_url
     @notification_url = ""
     @api_key = key
     @api_token = tok
@@ -25,7 +25,7 @@ class VoiceIt2
   def getAllUsers
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'users' + @notification_url,
+      :url => @base_url + '/users' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -39,7 +39,7 @@ class VoiceIt2
   def createUser
     return RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'users' + @notification_url,
+      :url => @base_url + '/users' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -53,7 +53,7 @@ class VoiceIt2
   def checkUserExists(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'users/' + userId + @notification_url,
+      :url => @base_url + '/users/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -67,7 +67,7 @@ class VoiceIt2
   def deleteUser(userId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => BASE_URL + 'users/' + userId + @notification_url,
+      :url => @base_url + '/users/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -82,7 +82,7 @@ class VoiceIt2
   def createManagedSubAccount(firstName, lastName, email, password, contentLanguage)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'subaccount/managed' + @notification_url,
+      :url => @base_url + '/subaccount/managed' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -108,7 +108,7 @@ class VoiceIt2
   def switchSubAccountType(subAccountAPIKey)
     return RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'subaccount/' + subAccountAPIKey + '/switchType' + @notification_url,
+      :url => @base_url + '/subaccount/' + subAccountAPIKey + '/switchType' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -122,7 +122,7 @@ class VoiceIt2
   def createUnmanagedSubAccount(firstName, lastName, email, password, contentLanguage)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'subaccount/unmanaged' + @notification_url,
+      :url => @base_url + '/subaccount/unmanaged' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -148,7 +148,7 @@ class VoiceIt2
   def regenerateSubAccountAPIToken(subAccountAPIKey)
     return RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'subaccount/' + subAccountAPIKey + @notification_url,
+      :url => @base_url + '/subaccount/' + subAccountAPIKey + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -162,7 +162,7 @@ class VoiceIt2
   def deleteSubAccount(subAccountAPIKey)
     return RestClient::Request.new(
       :method => :delete,
-      :url => BASE_URL + 'subaccount/' + subAccountAPIKey + @notification_url,
+      :url => @base_url + '/subaccount/' + subAccountAPIKey + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -177,7 +177,7 @@ class VoiceIt2
   def getGroupsForUser(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'users/' + userId + '/groups' + @notification_url,
+      :url => @base_url + '/users/' + userId + '/groups' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -192,7 +192,7 @@ class VoiceIt2
   def getAllVoiceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'enrollments/voice/' + userId + @notification_url,
+      :url => @base_url + '/enrollments/voice/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -207,7 +207,7 @@ class VoiceIt2
   def getAllVideoEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'enrollments/video/' + userId + @notification_url,
+      :url => @base_url + '/enrollments/video/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -222,7 +222,7 @@ class VoiceIt2
   def deleteAllEnrollments(userId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => BASE_URL + 'enrollments/' + userId + '/all' + @notification_url,
+      :url => @base_url + '/enrollments/' + userId + '/all' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -237,7 +237,7 @@ class VoiceIt2
   def getAllFaceEnrollments(userId)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'enrollments/face/' + userId + @notification_url,
+      :url => @base_url + '/enrollments/face/' + userId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -252,7 +252,7 @@ class VoiceIt2
   def createVoiceEnrollment(userId, contentLanguage, phrase, filePath)
       return RestClient::Request.new(
         :method => :post,
-        :url => BASE_URL + 'enrollments/voice' + @notification_url,
+        :url => @base_url + '/enrollments/voice' + @notification_url,
         :user => @api_key,
         :password => @api_token,
         :headers => {
@@ -277,7 +277,7 @@ class VoiceIt2
   def createVoiceEnrollmentByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'enrollments/voice/byUrl' + @notification_url,
+      :url => @base_url + '/enrollments/voice/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -302,7 +302,7 @@ class VoiceIt2
   def createFaceEnrollment(userId,  filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'enrollments/face' + @notification_url,
+      :url => @base_url + '/enrollments/face' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -325,7 +325,7 @@ class VoiceIt2
   def createFaceEnrollmentByUrl(userId, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'enrollments/face/byUrl' + @notification_url,
+      :url => @base_url + '/enrollments/face/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -344,7 +344,7 @@ class VoiceIt2
   def createVideoEnrollment(userId, contentLanguage,  phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'enrollments/video' + @notification_url,
+      :url => @base_url + '/enrollments/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -369,7 +369,7 @@ class VoiceIt2
   def createVideoEnrollmentByUrl(userId, contentLanguage,  phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'enrollments/video/byUrl' + @notification_url,
+      :url => @base_url + '/enrollments/video/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -394,7 +394,7 @@ class VoiceIt2
   def getAllGroups()
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'groups' + @notification_url,
+      :url => @base_url + '/groups' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -408,7 +408,7 @@ class VoiceIt2
   def getPhrases(contentLanguage)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'phrases/' + contentLanguage + @notification_url,
+      :url => @base_url + '/phrases/' + contentLanguage + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -422,7 +422,7 @@ class VoiceIt2
   def getGroup(groupId)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'groups/' + groupId + @notification_url,
+      :url => @base_url + '/groups/' + groupId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -436,7 +436,7 @@ class VoiceIt2
   def groupExists(groupId)
     return RestClient::Request.new(
       :method => :get,
-      :url => BASE_URL + 'groups/' + groupId + '/exists' + @notification_url,
+      :url => @base_url + '/groups/' + groupId + '/exists' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -450,7 +450,7 @@ class VoiceIt2
   def createGroup(description)
     return RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'groups' + @notification_url,
+      :url => @base_url + '/groups' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -468,7 +468,7 @@ class VoiceIt2
   def addUserToGroup(groupId, userId)
     return RestClient::Request.new(
       :method => :put,
-      :url => BASE_URL + 'groups/addUser' + @notification_url,
+      :url => @base_url + '/groups/addUser' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -487,7 +487,7 @@ class VoiceIt2
   def removeUserFromGroup(groupId, userId)
     return RestClient::Request.new(
       :method => :put,
-      :url => BASE_URL + 'groups/removeUser' + @notification_url,
+      :url => @base_url + '/groups/removeUser' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -506,7 +506,7 @@ class VoiceIt2
   def deleteGroup(groupId)
     return RestClient::Request.new(
       :method => :delete,
-      :url => BASE_URL + 'groups/' + groupId + @notification_url,
+      :url => @base_url + '/groups/' + groupId + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -520,7 +520,7 @@ class VoiceIt2
   def voiceVerification(userId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'verification/voice' + @notification_url,
+      :url => @base_url + '/verification/voice' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -545,7 +545,7 @@ class VoiceIt2
   def voiceVerificationByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'verification/voice/byUrl' + @notification_url,
+      :url => @base_url + '/verification/voice/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -570,7 +570,7 @@ class VoiceIt2
   def faceVerification(userId, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'verification/face' + @notification_url,
+      :url => @base_url + '/verification/face' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -593,7 +593,7 @@ class VoiceIt2
   def faceVerificationByUrl(userId, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'verification/face/byUrl' + @notification_url,
+      :url => @base_url + '/verification/face/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -612,7 +612,7 @@ class VoiceIt2
   def videoVerification(userId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'verification/video' + @notification_url,
+      :url => @base_url + '/verification/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -637,7 +637,7 @@ class VoiceIt2
   def videoVerificationByUrl(userId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'verification/video/byUrl' + @notification_url,
+      :url => @base_url + '/verification/video/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -662,7 +662,7 @@ class VoiceIt2
   def voiceIdentification(groupId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'identification/voice' + @notification_url,
+      :url => @base_url + '/identification/voice' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -687,7 +687,7 @@ class VoiceIt2
   def voiceIdentificationByUrl(groupId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'identification/voice/byUrl' + @notification_url,
+      :url => @base_url + '/identification/voice/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -712,7 +712,7 @@ class VoiceIt2
   def faceIdentification(groupId, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'identification/face' + @notification_url,
+      :url => @base_url + '/identification/face' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -735,7 +735,7 @@ class VoiceIt2
   def faceIdentificationByUrl(groupId,fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'identification/face/byUrl' + @notification_url,
+      :url => @base_url + '/identification/face/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -754,7 +754,7 @@ class VoiceIt2
   def videoIdentification(groupId, contentLanguage, phrase, filePath)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'identification/video' + @notification_url,
+      :url => @base_url + '/identification/video' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -779,7 +779,7 @@ class VoiceIt2
   def videoIdentificationByUrl(groupId, contentLanguage, phrase, fileUrl)
     return  RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'identification/video/byUrl' + @notification_url,
+      :url => @base_url + '/identification/video/byUrl' + @notification_url,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -804,7 +804,7 @@ class VoiceIt2
   def createUserToken(userId, secondsToTimeout)
     return RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'users/' + userId + '/token?timeOut=' + secondsToTimeout.to_s,
+      :url => @base_url + '/users/' + userId + '/token?timeOut=' + secondsToTimeout.to_s,
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -818,7 +818,7 @@ class VoiceIt2
   def expireUserTokens(userId)
     return RestClient::Request.new(
       :method => :post,
-      :url => BASE_URL + 'users/' + userId + '/expireTokens',
+      :url => @base_url + '/users/' + userId + '/expireTokens',
       :user => @api_key,
       :password => @api_token,
       :headers => {
@@ -829,7 +829,7 @@ class VoiceIt2
         e.response
   end
 
-  attr_reader :BASE_URL
+  attr_reader :base_url
   attr_reader :notification_url
   attr_reader :api_key
   attr_reader :api_token
