@@ -2,12 +2,13 @@ require './VoiceIt2.rb'
 require 'json'
 require "test/unit"
 require 'open-uri'
+require 'net/http'
 
 class TestVoiceIt2 < Test::Unit::TestCase
 
   def download_file(link, filename)
     File.open(filename, "wb") do |saved_file|
-      open(link, "rb") do |read_file|
+      URI.open(link, "rb") do |read_file|
         saved_file.write(read_file.read)
       end
     end
@@ -16,7 +17,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
   def test_notification_url() # test webhook URL's
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
-    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken, 'https://api.voiceit.io')
     if ENV['BOXFUSE_ENV'] == 'voiceittest'
       File.write(ENV['HOME'] + '/' + 'platformVersion', VoiceIt2::VERSION)
     end
@@ -29,7 +30,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
   def test_users_groups() # get all users, get all groups, create user, create group, add user to group, remove user from group, delete user delete group
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
-    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken, 'https://api.voiceit.io')
     ret = JSON.parse(myVoiceIt.createUser())
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
@@ -92,7 +93,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
   def test_sub_accounts()
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
-    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken, 'https://api.voiceit.io')
     ret = JSON.parse(myVoiceIt.createManagedSubAccount('Test','Ruby', '', '', ''))
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
@@ -127,7 +128,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
-    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken, 'https://api.voiceit.io')
     userId1 = JSON.parse(myVoiceIt.createUser())['userId']
     userId2 = JSON.parse(myVoiceIt.createUser())['userId']
     groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']
@@ -259,7 +260,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
-    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken, 'https://api.voiceit.io')
     userId1 = JSON.parse(myVoiceIt.createUser())['userId']
     userId2 = JSON.parse(myVoiceIt.createUser())['userId']
     groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']
@@ -268,11 +269,12 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     # Voice Enrollments
     begin
-      ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './enrollmentB.wav'))
+      ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './enrollmentB1.wav'))
     rescue => e
       assert_equal("No such file or directory ", e.message.split("@").first)
     end
-    ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './enrollmentA1.wav'))
+    str = myVoiceIt.createVoiceEnrollment(userId1, 'en-US', 'Never forget tomorrow is a new day', './enrollmentA1.wav')
+    ret = JSON.parse(str)
     assert_equal(201, ret['status'])
     assert_equal('SUCC', ret['responseCode'])
     ret = JSON.parse(myVoiceIt.createVoiceEnrollment(userId1, 'en-US',  'Never forget tomorrow is a new day','./enrollmentA2.wav'))
@@ -389,7 +391,7 @@ class TestVoiceIt2 < Test::Unit::TestCase
 
     viapikey = ENV['VIAPIKEY']
     viapitoken = ENV['VIAPITOKEN']
-    myVoiceIt = VoiceIt2.new(viapikey, viapitoken)
+    myVoiceIt = VoiceIt2.new(viapikey, viapitoken, 'https://api.voiceit.io')
     userId1 = JSON.parse(myVoiceIt.createUser())['userId']
     userId2 = JSON.parse(myVoiceIt.createUser())['userId']
     groupId = JSON.parse(myVoiceIt.createGroup('Sample Group Description'))['groupId']

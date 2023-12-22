@@ -6,8 +6,9 @@ require 'cgi'
 class VoiceIt2
 
   VERSION = '3.7.0'
+  PLATFORM_ID = '35'
 
-  def initialize(key, tok, custom_url: 'https://api.voiceit.io')
+  def initialize(key, tok, custom_url='https://api.voiceit.io')
     @base_url = custom_url
     @notification_url = ""
     @api_key = key
@@ -29,7 +30,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -43,7 +44,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -57,7 +58,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -71,7 +72,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
 
@@ -86,7 +87,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -112,7 +113,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -126,7 +127,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -152,7 +153,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -166,7 +167,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
 
@@ -181,7 +182,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
 
@@ -196,7 +197,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
 
@@ -211,7 +212,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
 
@@ -226,7 +227,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
 
@@ -241,7 +242,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
 
@@ -250,13 +251,14 @@ class VoiceIt2
   end
 
   def createVoiceEnrollment(userId, contentLanguage, phrase, filePath)
-      return RestClient::Request.new(
+      # file = File.new(filePath, 'r')
+      req = RestClient::Request.new(
         :method => :post,
         :url => @base_url + '/enrollments/voice' + @notification_url,
         :user => @api_key,
         :password => @api_token,
         :headers => {
-          platformId: '35',
+          platformId: PLATFORM_ID,
           platformVersion: VERSION
         },
         :payload => {
@@ -264,14 +266,15 @@ class VoiceIt2
           :phrase => phrase,
           :userId => userId,
           :contentLanguage => contentLanguage,
-          :recording => File.new(filePath, 'rb')
-          }).execute
-      rescue => e
-        if e.class == Errno::ENOENT
-          raise e.message
-        else
-          e.response
-        end
+          :recording => File.new(filePath, 'r')
+        }).execute
+
+    rescue => e
+      if e.class == Errno::ENOENT
+        raise e.message
+      else
+        e.response
+      end
   end
 
   def createVoiceEnrollmentByUrl(userId, contentLanguage, phrase, fileUrl)
@@ -281,7 +284,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -306,13 +309,13 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
         :userId => userId,
-        :video => File.new(filePath, 'rb'),
+        :video => File.new(filePath, 'r'),
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -329,7 +332,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -348,7 +351,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -356,7 +359,7 @@ class VoiceIt2
         :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
-        :video => File.new(filePath, 'rb'),
+        :video => File.new(filePath, 'r'),
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -373,7 +376,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -398,7 +401,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -412,7 +415,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -426,7 +429,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -440,7 +443,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -454,7 +457,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -472,7 +475,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -491,7 +494,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -510,7 +513,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -524,7 +527,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -532,7 +535,7 @@ class VoiceIt2
         :phrase => phrase,
         :userId => userId,
         :contentLanguage => contentLanguage,
-        :recording => File.new(filePath, 'rb')
+        :recording => File.new(filePath, 'r')
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -549,7 +552,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -574,13 +577,13 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
         :userId => userId,
-        :video => File.new(filePath, 'rb')
+        :video => File.new(filePath, 'r')
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -597,7 +600,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -616,7 +619,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -624,7 +627,7 @@ class VoiceIt2
         :userId => userId,
         :phrase => phrase,
         :contentLanguage => contentLanguage,
-        :video => File.new(filePath, 'rb')
+        :video => File.new(filePath, 'r')
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -641,7 +644,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -666,7 +669,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -674,7 +677,7 @@ class VoiceIt2
         :phrase => phrase,
         :groupId => groupId,
         :contentLanguage => contentLanguage,
-        :recording => File.new(filePath, 'rb')
+        :recording => File.new(filePath, 'r')
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -691,7 +694,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -716,13 +719,13 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
         :multipart => true,
         :groupId => groupId,
-        :video => File.new(filePath, 'rb')
+        :video => File.new(filePath, 'r')
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -739,7 +742,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -758,7 +761,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -766,7 +769,7 @@ class VoiceIt2
         :phrase => phrase,
         :groupId => groupId,
         :contentLanguage => contentLanguage,
-        :video => File.new(filePath, 'rb')
+        :video => File.new(filePath, 'r')
         }).execute
     rescue => e
       if e.class == Errno::ENOENT
@@ -783,7 +786,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       },
       :payload => {
@@ -808,7 +811,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
@@ -822,7 +825,7 @@ class VoiceIt2
       :user => @api_key,
       :password => @api_token,
       :headers => {
-        platformId: '35',
+        platformId: PLATFORM_ID,
         platformVersion: VERSION
       }).execute
     rescue => e
