@@ -1,0 +1,7 @@
+VoiceIt2.gemspec
+*.wav
+*.mov
+*.mp4
+*.jpeg
+*.jpg
+*.png
